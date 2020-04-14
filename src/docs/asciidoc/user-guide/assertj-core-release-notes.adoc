@@ -27,7 +27,7 @@ The recursive comparison API has been promoted and is not a beta API anymore.
 [[assertj-core-3.16.0-contributors]]
 [.release-note-category]#icon:user[] Contributors#
 
-Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe and Fr Jeremy Krieg.
+Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe, Fabien Duminy, Piotrek Żygieło, Indrek Priks, Jakzi666, Daniel Avila and Fr Jeremy Krieg.
 
 [[assertj-core-3.16.0-breaking-changes]]
 [.release-note-category]#icon:exclamation-triangle[] Breaking changes#
@@ -42,38 +42,78 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 [[assertj-core-3.16.0-new-features]]
 [.release-note-category]#icon:plus-circle[] New features#
 
-- Add assertions on the link:#assertj-core-3.16.0-cause-root-cause-assertions[cause and root cause exception message]. (Wim Deblauwe)
+- Add assertions on the link:#assertj-core-throwable-cause-and-root-cause-assertions[cause and root cause exception message]. (Wim Deblauwe)
+- Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-expected-null-fields[ignore null fields from the expected object].
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
 
-- In class should be package private assertion, the error message now explicitly mentions package-private.  
-- Clean up unused imports (Erhard Pointl).  
-- Reenable sonar reports (Stefano Cordio).  
+- `ByteArrayAssert.containsExactly(byte...)` error message now mentions not found and unexpected elements. (Indrek Priks)
+- In "should be package private" class assertion, the error message now explicitly mentions package-private instead of a blank value.  
 - Use primitive comparison in `Float` and `Double` `isNotEqualTo` when compared to primitive float/double values.
+- link:#assertj-core-3.16.0-disambiguate-date-representation[Disambiguate colliding date/time representation].
+- Support up to four arguments for `satisfiesAnyOf()`. (Jakzi666)
 - Clarify the error message when comparing float/double NaN with ==.
+- Add short array assertions taking `int...`. (Daniel Avila)
+- Move protected `extracting` method to `AbstractAssert` to make is more accessible. (Stefano Cordio)
 - Improve line number accuracy in soft assertion error messages. (Stefano Cordio)
-- Introduce EqualsVerifier for internal tests. (Stefano Cordio)
+- Internal: introduce EqualsVerifier for internal tests. (Stefano Cordio)
+- Internal: Optimize Charset finding in tests. (Fabien Duminy)
+- Internal: Clean up unused imports (Erhard Pointl, Piotrek Żygieło)
+- Internal: use static imports (Piotrek Żygieło)
+- Internal: Remove unnecessary type parameters from extractors (Stefano Cordio)
+- Reenable sonar reports (Stefano Cordio)
 
 
 [[assertj-core-3.16.0-fixed]]
 [.release-note-category]#icon:wrench[] Fixed#
 
-- Fix typos (Wim Deblauwe)
+- Fix typos (Wim Deblauwe, Stefano Cordio)
 
 [[assertj-core-3.16.0-deprecated]]
 [.release-note-category]#icon:ban[] Deprecated#
 
 - Deprecate ...
 
-[[assertj-core-3.16.0-cause-root-cause-assertions]]
-[.release-note-item]#Add assertions on the cause and root cause exception message#
+[[assertj-core-3.16.0-disambiguate-date-representation]]
+[.release-note-item]#Disambiguate colliding date/time representation#
 
+Different date/time types can be represented the same way (`LocalDateTime` and `Date` for example) which makes it difficult to understand error messages as they don't show any difference between actual and expected values. AssertJ now adds the date/time type name for types whose representation may collide.
 
-Examples:
+Example: the following failing assertion ... 
 [source,java,indent=0]
 ----
-assertThat(Duration.ZERO).isZero();
+Date now = new Date();
+Object localDateTime = LocalDateTime.ofInstant(now.toInstant(), ZoneId.systemDefault());
+
+assertThat(List.of(localDateTime)).containsExactly(now);
+----
+
+\... fails with this error:
+
+[source,indent=0]
+----
+Expecting:
+  <[2020-03-19T22:32:42.875 (java.time.LocalDateTime)]>
+to contain exactly (and in same order):
+  <[2020-03-19T22:32:42.875 (java.util.Date)]>
+but some elements were not found:
+  <[2020-03-19T22:32:42.875 (java.util.Date)]>
+and others were not expected:
+  <[2020-03-19T22:32:42.875 (java.time.LocalDateTime)]>
+----
+
+Before that the error would have been confusing:
+[source,indent=0]
+----
+Expecting:
+  <[2020-03-19T22:32:42.875]>
+to contain exactly (and in same order):
+  <[2020-03-19T22:32:42.875]>
+but some elements were not found:
+  <[2020-03-19T22:32:42.875]>
+and others were not expected:
+  <[2020-03-19T22:32:42.875]>
 ----
 
 
@@ -171,7 +211,7 @@ Shout out to Vincent Ricard for the various tests refactoring, that was quite a 
 - Deprecate `Preconditions#checkNotNull(Object, String)` in favor of `Objects.requireNonNull(Object, String)`.
 
 [[assertj-core-3.15.0-Duration]]
-[.release-note-item]#Add `java.time.Duration` assertions.#
+[.release-note-item]#Add `java.time.Duration` assertions#
 
 The following `java.time.Duration` assertions are available
 
