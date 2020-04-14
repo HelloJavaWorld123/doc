@@ -27,35 +27,47 @@ The recursive comparison API has been promoted and is not a beta API anymore.
 [[assertj-core-3.16.0-contributors]]
 [.release-note-category]#icon:user[] Contributors#
 
-Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher and Fr Jeremy Krieg.
+Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe and Fr Jeremy Krieg.
 
 [[assertj-core-3.16.0-breaking-changes]]
 [.release-note-category]#icon:exclamation-triangle[] Breaking changes#
 
+* The following base soft assertions classes were changed to interfaces (with default methods) and renamed:
+** `AbstractBDDSoftAssertions` was renamed to `BDDSoftAssertionsProvider`
+** `AbstractStandardSoftAssertions` was renamed to `StandardSoftAssertionsProvider`
+** `Java6AbstractBDDSoftAssertions` was renamed to `Java6BDDSoftAssertionsProvider`
+** `Java6AbstractStandardSoftAssertions` was renamed to `Java6StandardSoftAssertionsProvider`
 * Move ThrowingCallable from `AbstractSoftAssertions` to  `SoftAssertionsProvider`.
 
 [[assertj-core-3.16.0-new-features]]
 [.release-note-category]#icon:plus-circle[] New features#
 
-- Add link:#assertj-core-3.16.0-Duration[`java.time.Duration`] assertions. (...)
+- Add assertions on the link:#assertj-core-3.16.0-cause-root-cause-assertions[cause and root cause exception message]. (Wim Deblauwe)
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
 
-- ...
+- In class should be package private assertion, the error message now explicitly mentions package-private.  
+- Clean up unused imports (Erhard Pointl).  
+- Reenable sonar reports (Stefano Cordio).  
+- Use primitive comparison in `Float` and `Double` `isNotEqualTo` when compared to primitive float/double values.
+- Clarify the error message when comparing float/double NaN with ==.
+- Improve line number accuracy in soft assertion error messages. (Stefano Cordio)
+- Introduce EqualsVerifier for internal tests. (Stefano Cordio)
+
 
 [[assertj-core-3.16.0-fixed]]
 [.release-note-category]#icon:wrench[] Fixed#
 
-- Fix ... ()
+- Fix typos (Wim Deblauwe)
 
 [[assertj-core-3.16.0-deprecated]]
 [.release-note-category]#icon:ban[] Deprecated#
 
 - Deprecate ...
 
-[[assertj-core-3.16.0-Duration]]
-[.release-note-item]#Add `java.time.Duration` assertions.#
+[[assertj-core-3.16.0-cause-root-cause-assertions]]
+[.release-note-item]#Add assertions on the cause and root cause exception message#
 
 
 Examples:
