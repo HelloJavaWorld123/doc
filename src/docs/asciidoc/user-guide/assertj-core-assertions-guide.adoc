@@ -572,6 +572,45 @@ This section describes the assertions common to all types.
 
 TODO
 
+[[assertj-string-object-assertions]]
+==== String/CharSequence assertions
+
+This section describes all the available assertions for `CharSequence` (including `String`, `StringBuilder`, `StringBuffer`, ...):
+
+- link:#assertj-core-string-ignoring-punctuation[compare string ignoring punctuation and normalizing whitespaces]
+
+The javadoc for `CharSequence` assertions is available https://www.javadoc.io/static/org.assertj/assertj-core/{assertj-core-version}/org/assertj/core/api/AbstractCharSequenceAssert.html#method.summary[here].
+
+[[assertj-core-string-ignoring-punctuation]]
+===== Comparison ignoring punctuation and normalizing whitespaces
+
+Verifies that the actual `CharSequence` is equal to the given one, after the punctuation of both strings have been normalized.
+
+To be exact, the following rules are applied:
+
+* All punctuation of actual and expected strings are ignored and whitespaces are normalized
+* Punctuation is any of the following character:`!"#$%&'()*+,-./:;=<>?@[\]^_{|}~\``  
+
+Examples:
+[source,java]
+----
+// assertions succeed:
+assertThat("Game'of'Thrones").isEqualToNormalizingPunctuationAndWhitespace("GameofThrones")
+assertThat("Game of Throne's").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat(":Game of Thrones:").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat(":Game-of-Thrones:").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat("Game of Thrones?").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat("Game of Thrones!!!").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat("Game of  {{(!)}}    Thrones!!!").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
+assertThat("{(Game)-(of)-(Thrones)!!!}").isEqualToNormalizingPunctuationAndWhitespace("GameofThrones");
+
+// assertions fail:
+assertThat("Game-of-Thrones").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
+assertThat("{Game:of:Thrones}").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
+assertThat("{(Game)-(of)-(Thrones)!!!}").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
+----
+
+
 [[assertj-core-iterable-assertions]]
 ==== Iterable/Collection assertions (TODO)
 
@@ -580,14 +619,14 @@ TODO
 [[assertj-core-exception-assertions]]
 ==== Exception assertions
 
-This chapter answers the question: how to assert that an exception has been thrown and check that it is the expected one ?
+This chapter answers the question: how to assert that an exception has been thrown and check that it is the expected one?
 
 If you use java 8 or later versions, check the link:#assertj-core-exception-assertions-java-8[Java 8 section] which heavily uses lambdas.
 If you use java 7, check the link:#assertj-core-exception-assertions-java-7[Java 7 section].
 
 All the available assertions are described in the link:#assertj-core-exception-assertions-reference[throwable assertions reference section].
 
-In this chapter is exception is used interchangeably with throwable.
+In this chapter the term `exception` is used interchangeably with `throwable`.
 
 [[assertj-core-exception-assertions-java-8]]
 ===== With Java 8 (AssertJ 3.x)
@@ -729,7 +768,7 @@ This section describes all the available assertions for throwables:
 - link:#assertj-core-throwable-assertions-hasMessage[Checking the throwable message]
 - link:#assertj-core-throwable-cause-and-root-cause-assertions[Checking the throwable's cause and root cause]
 
-The javadoc for throwable assertions is available https://www.javadoc.io/static/org.assertj/assertj-core/3.15.0/org/assertj/core/api/AbstractThrowableAssert.html#method.summary[here].
+The javadoc for throwable assertions is available https://www.javadoc.io/static/org.assertj/assertj-core/{assertj-core-version}/org/assertj/core/api/AbstractThrowableAssert.html#method.summary[here].
 
 [[assertj-core-throwable-assertions-hasMessage]]
 ====== Checking the throwable message
@@ -854,6 +893,7 @@ Since 3.12.0 AssertJ Core provides a new fluent recursive comparison API for `Ob
 * link:#assertj-core-recursive-comparison-comparators[Specifying comparators to use in the comparison]
 * link:#assertj-core-recursive-comparison-ignoring-equals[Force recursive comparison on classes that have redefined `equals`]
 * link:#assertj-core-recursive-comparison-ignoring-all-expected-null-fields[Ignoring all expected null fields]
+* link:#assertj-core-recursive-comparison-ignoring-all-actual-empty-optional-fields[Ignoring all actual empty optional fields].
 
 The recursive comparison mode starts after calling `usingRecursiveComparison()`.
 By default it uses `equals` methods of classes that have overriden it, this behavior can be changed forcing recursive comparison on these classes (link:#assertj-core-recursive-comparison-ignoring-equals[see this section]).
@@ -1113,6 +1153,54 @@ assertThat(sherlock).usingRecursiveComparison()
 assertThat(noName).usingRecursiveComparison()
                   .ignoringExpectedNullFields()
                   .isEqualTo(sherlock);
+----
+
+[[assertj-core-recursive-comparison-ignoring-all-actual-empty-optional-fields]]
+===== Ignoring all actual empty optional fields
+
+`ignoringActualEmptyOptionalFields()` makes the recursive comparison to ignore all actual empty optional fields (including `Optional`, `OptionalInt`, `OptionalLong` and `OptionalDouble`). + 
+Note that the expected object empty optional fields are not ignored, this only applies to actual's fields. 
+
+[source,java,indent=0]
+----
+ public class Person {
+   String name;
+   OptionalInt age;
+   OptionalLong id;
+   OptionalDouble height;
+   Home home = new Home();
+ }
+
+ public class Home {
+   String address;
+   Optional<String> phone;
+ }
+
+ Person homerWithoutDetails = new Person("Homer Simpson");
+ homerWithoutDetails.home.address.street = "Evergreen Terrace";
+ homerWithoutDetails.home.address.number = 742;
+ homerWithoutDetails.home.phone = Optional.empty();
+ homerWithoutDetails.age = OptionalInt.empty();
+ homerWithoutDetails.id = OptionalLong.empty();
+ homerWithoutDetails.height = OptionalDouble.empty();
+
+ Person homerWithDetails = new Person("Homer Simpson");
+ homerWithDetails.home.address.street = "Evergreen Terrace";
+ homerWithDetails.home.address.number = 742;
+ homerWithDetails.home.phone = Optional.of("(939) 555-0113");
+ homerWithDetails.age = OptionalInt.of(39);
+ homerWithDetails.id = OptionalLong.of(123456);
+ homerWithDetails.height = OptionalDouble.of(1.83);
+
+ // assertion succeeds as phone is ignored in the comparison
+ assertThat(homerWithoutDetails).usingRecursiveComparison()
+                                .ignoringActualEmptyOptionalFields()
+                                .isEqualTo(homerWithDetails);
+
+ // assertion fails as phone, age, id and height are not ignored and are populated for homerWithDetails but not for homerWithoutDetails.
+ assertThat(homerWithDetails).usingRecursiveComparison()
+                             .ignoringActualEmptyOptionalFields()
+                             .isEqualTo(homerWithoutDetails);
 ----
 
 [[assertj-core-recursive-comparison-comparators]]

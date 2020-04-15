@@ -27,7 +27,7 @@ The recursive comparison API has been promoted and is not a beta API anymore.
 [[assertj-core-3.16.0-contributors]]
 [.release-note-category]#icon:user[] Contributors#
 
-Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe, Fabien Duminy, Piotrek Żygieło, Indrek Priks, Jakzi666, Daniel Avila and Fr Jeremy Krieg.
+Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe, Fabien Duminy, Piotrek Żygieło, Indrek Priks, Jakzi666, Daniel Avila, Harisha Talanki, Grzegorz Piwowarek and Fr Jeremy Krieg.
 
 [[assertj-core-3.16.0-breaking-changes]]
 [.release-note-category]#icon:exclamation-triangle[] Breaking changes#
@@ -44,6 +44,8 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 
 - Add assertions on the link:#assertj-core-throwable-cause-and-root-cause-assertions[cause and root cause exception message]. (Wim Deblauwe)
 - Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-expected-null-fields[ignore null fields from the expected object].
+- Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-actual-empty-optional-fields[ ignore all actual empty optional fields].
+- Add assertion to link:#assertj-core-string-ignoring-punctuation[compare string ignoring punctuation and normalizing whitespaces]. (Harisha Talanki) 
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
@@ -55,14 +57,16 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 - Support up to four arguments for `satisfiesAnyOf()`. (Jakzi666)
 - Clarify the error message when comparing float/double NaN with ==.
 - Add short array assertions taking `int...`. (Daniel Avila)
+- Use AssertJ site theme for javadoc.
 - Move protected `extracting` method to `AbstractAssert` to make is more accessible. (Stefano Cordio)
 - Improve line number accuracy in soft assertion error messages. (Stefano Cordio)
 - Internal: introduce EqualsVerifier for internal tests. (Stefano Cordio)
 - Internal: Optimize Charset finding in tests. (Fabien Duminy)
 - Internal: Clean up unused imports (Erhard Pointl, Piotrek Żygieło)
-- Internal: use static imports (Piotrek Żygieło)
-- Internal: Remove unnecessary type parameters from extractors (Stefano Cordio)
-- Reenable sonar reports (Stefano Cordio)
+- Internal: use static imports. (Piotrek Żygieło)
+- Internal: Remove unnecessary type parameters from extractors. (Stefano Cordio)
+- Internal: Access assertion info directly in `AtomicLongAssert`/`AtomicIntegerAssert`. (Grzegorz Piwowarek)
+- Reenable sonar reports. (Stefano Cordio)
 
 
 [[assertj-core-3.16.0-fixed]]
