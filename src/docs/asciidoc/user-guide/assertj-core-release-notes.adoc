@@ -42,10 +42,14 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 [[assertj-core-3.16.0-new-features]]
 [.release-note-category]#icon:plus-circle[] New features#
 
+- Allow link:#assertj-core-soft-assertions-combining[combining soft assertions entry points]. (Fr Jeremy Krieg) 
+- Support link:#assertj-core-junit5-soft-assertions-custom-injection[injecting custom soft assertions in JUnit 5 `SoftAssertionExtension`]. (Fr Jeremy Krieg) 
 - Add assertions on the link:#assertj-core-throwable-cause-and-root-cause-assertions[cause and root cause exception message]. (Wim Deblauwe)
 - Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-expected-null-fields[ignore null fields from the expected object].
 - Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-actual-empty-optional-fields[ ignore all actual empty optional fields].
 - Add assertion to link:#assertj-core-string-ignoring-punctuation[compare string ignoring punctuation and normalizing whitespaces]. (Harisha Talanki) 
+- Add link:#assertj-core-string-isBase64[`isBase64` to `String` assertions]. (Stefano Cordio) 
+- Add link:#assertj-core-string-decodedAsBase64[`decodedAsBase64` to `String` assertions]. (Stefano Cordio) 
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
@@ -62,7 +66,7 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 - Improve line number accuracy in soft assertion error messages. (Stefano Cordio)
 - Internal: introduce EqualsVerifier for internal tests. (Stefano Cordio)
 - Internal: Optimize Charset finding in tests. (Fabien Duminy)
-- Internal: Clean up unused imports (Erhard Pointl, Piotrek Żygieło)
+- Internal: Clean up unused imports (Erhard Pointl, Piotrek Żygieło, Stefano Cordio, Pascal Schumacher)
 - Internal: use static imports. (Piotrek Żygieło)
 - Internal: Remove unnecessary type parameters from extractors. (Stefano Cordio)
 - Internal: Access assertion info directly in `AtomicLongAssert`/`AtomicIntegerAssert`. (Grzegorz Piwowarek)
