@@ -22,8 +22,6 @@ Older release notes can be found in the old site: https://joel-costigliola.githu
 
 Release date : 2020-04-xx
 
-The recursive comparison API has been promoted and is not a beta API anymore.
-
 [[assertj-core-3.16.0-contributors]]
 [.release-note-category]#icon:user[] Contributors#
 
@@ -48,8 +46,9 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 - Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-expected-null-fields[ignore null fields from the expected object].
 - Recursive comparison learned to link:#assertj-core-recursive-comparison-ignoring-all-actual-empty-optional-fields[ ignore all actual empty optional fields].
 - Add assertion to link:#assertj-core-string-ignoring-punctuation[compare string ignoring punctuation and normalizing whitespaces]. (Harisha Talanki) 
-- Add link:#assertj-core-string-isBase64[`isBase64` to `String` assertions]. (Stefano Cordio) 
-- Add link:#assertj-core-string-decodedAsBase64[`decodedAsBase64` to `String` assertions]. (Stefano Cordio) 
+- Add link:#assertj-core-string-isBase64[`isBase64`] to `String` assertions. (Stefano Cordio)
+- Add link:#assertj-core-string-decodedAsBase64[`decodedAsBase64`] to `String` assertions. (Stefano Cordio)
+- Add link:#assertj-core-3.16.0-LongAdder[`java.util.concurrent.atomic.LongAdder`] assertions. (Grzegorz Piwowarek)
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
@@ -62,16 +61,17 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 - Clarify the error message when comparing float/double NaN with ==.
 - Add short array assertions taking `int...`. (Daniel Avila)
 - Use AssertJ site theme for javadoc.
-- Move protected `extracting` method to `AbstractAssert` to make is more accessible. (Stefano Cordio)
+- Move core `extracting` features from `AbstractObjectAssert` to `AbstractAssert`, making them available for custom assertions. (Stefano Cordio)
 - Improve line number accuracy in soft assertion error messages. (Stefano Cordio)
 - Internal: introduce EqualsVerifier for internal tests. (Stefano Cordio)
-- Internal: Optimize Charset finding in tests. (Fabien Duminy)
-- Internal: Clean up unused imports (Erhard Pointl, Piotrek Żygieło, Stefano Cordio, Pascal Schumacher)
+- Internal: optimize Charset finding in tests. (Fabien Duminy)
+- Internal: clean up unused imports (Erhard Pointl, Piotrek Żygieło, Stefano Cordio, Pascal Schumacher)
 - Internal: use static imports. (Piotrek Żygieło)
-- Internal: Remove unnecessary type parameters from extractors. (Stefano Cordio)
-- Internal: Access assertion info directly in `AtomicLongAssert`/`AtomicIntegerAssert`. (Grzegorz Piwowarek)
-- Reenable sonar reports. (Stefano Cordio)
-
+- Internal: remove unnecessary type parameters from extractors. (Stefano Cordio)
+- Internal: access assertion info directly in `AtomicLongAssert`/`AtomicIntegerAssert`. (Grzegorz Piwowarek)
+- Re-enable Sonar reports. (Stefano Cordio)
+- Update ByteBuddy to version 1.10.9.
+- Update JUnit Jupiter to version 5.6.2 (still optional).
 
 [[assertj-core-3.16.0-fixed]]
 [.release-note-category]#icon:wrench[] Fixed#
@@ -81,7 +81,17 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 [[assertj-core-3.16.0-deprecated]]
 [.release-note-category]#icon:ban[] Deprecated#
 
-- Deprecate ...
+- Deprecate `areEqual()` and `areEqualArrays()` in `org.assertj.core.util.Objects`.
+
+[[assertj-core-3.16.0-LongAdder]]
+[.release-note-item]#Add `java.util.concurrent.atomic.LongAdder` assertions#
+
+The following `java.util.concurrent.atomic.LongAdder` assertions are available:
+
+- `hasValue(long expected)`, which verifies that the actual LongAdder sum has the given value.
+- `doesNotHaveValue(long unexpected)`, which verifies that the actual LongAdder sum has not the given value.
+- All the assertions provided by `NumberAssert`, using the LongAdder sum as actual value.
+- All the assertions provided by `ComparableAssert`, using the LongAdder sum as actual value.
 
 [[assertj-core-3.16.0-disambiguate-date-representation]]
 [.release-note-item]#Disambiguate colliding date/time representation#
@@ -123,8 +133,6 @@ but some elements were not found:
 and others were not expected:
   <[2020-03-19T22:32:42.875]>
 ----
-
-
 
 [[assertj-core-3-15-0-release-notes]]
 ==== AssertJ Core 3.15.0
@@ -221,7 +229,7 @@ Shout out to Vincent Ricard for the various tests refactoring, that was quite a 
 [[assertj-core-3.15.0-Duration]]
 [.release-note-item]#Add `java.time.Duration` assertions#
 
-The following `java.time.Duration` assertions are available
+The following `java.time.Duration` assertions are available:
 
 - `hasDays​(long otherDays)`: Verifies that the actual Duration has the given days.
 - `hasHours​(long otherHours)`: Verifies that the actual Duration has the given hours.

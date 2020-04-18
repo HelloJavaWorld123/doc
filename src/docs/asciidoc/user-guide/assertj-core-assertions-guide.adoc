@@ -98,6 +98,7 @@ a| Atomic basic types:
 * AtomicInteger
 * AtomicLong
 * AtomicBoolean
+
 a| Atomic array types:
 
 * AtomicIntegerArray
@@ -113,8 +114,13 @@ a| Atomic updater types:
 * AtomicIntegerFieldUpdater
 * AtomicLongFieldUpdater
 * AtomicReferenceFieldUpdater
-|====
 
+a| Adder types:
+
+* LongAdder
+
+a|
+|====
 
 [[assertj-core-assertion-description]]
 ==== Assertion description
