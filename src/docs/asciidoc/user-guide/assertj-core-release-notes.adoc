@@ -30,6 +30,7 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 [[assertj-core-3.16.0-breaking-changes]]
 [.release-note-category]#icon:exclamation-triangle[] Breaking changes#
 
+* `AbstractSoftAssertions` is now `abstract`
 * The following base soft assertions classes were changed to interfaces (with default methods) and renamed:
 ** `AbstractBDDSoftAssertions` was renamed to `BDDSoftAssertionsProvider`
 ** `AbstractStandardSoftAssertions` was renamed to `StandardSoftAssertionsProvider`
