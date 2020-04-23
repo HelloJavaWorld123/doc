@@ -657,9 +657,33 @@ assertThat("inv@lid").decodedAsBase64();
 
 
 [[assertj-core-iterable-assertions]]
-==== Iterable/Collection assertions (TODO)
+==== Iterable/Collection/array assertions (WIP)
 
 TODO
+
+[[assertj-core-array-assertions]]
+===== byte[] specific assertions
+
+This section covers assertions to byte array.
+
+- Add link:#assertj-core-byte-array-asHexString[`asHexString`] to byte array assertions.
+
+[[assertj-core-byte-array-asHexString]]
+====== asHexString
+
+Converts the actual byte array under test to an hexadecimal String and returns assertions for the computed String allowing String specific assertions from this call. +
+The Hex String representation is in upper case.
+
+Example :
+[source,java]
+----
+byte[] bytes = new byte[] { -1, 0, 1 };
+
+// assertion will pass
+assertThat(bytes).asHexString()
+                 .startsWith("FF")
+                 .isEqualTo("FF0001");
+----
 
 [[assertj-core-exception-assertions]]
 ==== Exception assertions
