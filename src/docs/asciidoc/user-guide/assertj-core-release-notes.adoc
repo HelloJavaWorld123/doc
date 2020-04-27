@@ -25,7 +25,7 @@ Release date : 2020-04-xx
 [[assertj-core-3.16.0-contributors]]
 [.release-note-category]#icon:user[] Contributors#
 
-Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe, Fabien Duminy, Piotrek Żygieło, Indrek Priks, Jakzi666, Daniel Avila, Harisha Talanki, Grzegorz Piwowarek, Andreas Mager and Fr Jeremy Krieg.
+Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, Pascal Schumacher, Wim Deblauwe, Fabien Duminy, Piotrek Żygieło, Indrek Priks, Jakzi666, Daniel Avila, Harisha Talanki, Grzegorz Piwowarek, Andreas Mager, Sunt-ing, ebundy and Fr Jeremy Krieg.
 
 [[assertj-core-3.16.0-breaking-changes]]
 [.release-note-category]#icon:exclamation-triangle[] Breaking changes#
@@ -50,7 +50,9 @@ Thanks to all the contributors of this release: Erhard Pointl, Stefano Cordio, P
 - Add link:#assertj-core-string-isBase64[`isBase64`] to `String` assertions. (Stefano Cordio)
 - Add link:#assertj-core-string-decodedAsBase64[`decodedAsBase64`] to `String` assertions. (Stefano Cordio)
 - Add link:#assertj-core-3.16.0-LongAdder[`java.util.concurrent.atomic.LongAdder`] assertions. (Grzegorz Piwowarek)
-- Add link:#assertj-core-byte-array-asHexString[`asHexString`] to byte array assertions. (Andreas Mager) 
+- Add link:#assertj-core-byte-array-asHexString[`asHexString`] to `byte[]` assertions. (Andreas Mager) 
+- Add link:#assertj-core-url-assertions[`isEqualToWithSortedQueryParameters`] to `URL` assertions. (Sunt-ing) 
+- Add link:#assertj-core-directory-assertions[`isDirectoryRecursivelyContaining`] to `File`/`Path` assertions. (ebundy) 
 
 [[assertj-core-3.16.0-improvements]]
 [.release-note-category]#icon:arrow-circle-up[] Improvements#
