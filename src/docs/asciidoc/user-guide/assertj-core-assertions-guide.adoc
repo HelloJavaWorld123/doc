@@ -583,77 +583,7 @@ TODO
 
 This section describes all the available assertions for `CharSequence` (including `String`, `StringBuilder`, `StringBuffer`, ...):
 
-- link:#assertj-core-string-ignoring-punctuation[compare string ignoring punctuation and normalizing whitespaces]
-- link:#assertj-core-string-isBase64[`isBase64` to `String`/`CharSequence` assertions]
-
 The javadoc for `CharSequence` assertions is available https://www.javadoc.io/static/org.assertj/assertj-core/{assertj-core-version}/org/assertj/core/api/AbstractCharSequenceAssert.html#method.summary[here].
-
-[[assertj-core-string-ignoring-punctuation]]
-===== Comparison ignoring punctuation and normalizing whitespaces
-
-Verifies that the actual `CharSequence` is equal to the given one, after the punctuation of both strings have been normalized.
-
-To be exact, the following rules are applied:
-
-* All punctuation of actual and expected strings are ignored and whitespaces are normalized
-* Punctuation is any of the following character:`!"#$%&'()*+,-./:;=<>?@[\]^_{|}~\``  
-
-Examples:
-[source,java]
-----
-// assertions succeed:
-assertThat("Game'of'Thrones").isEqualToNormalizingPunctuationAndWhitespace("GameofThrones")
-assertThat("Game of Throne's").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat(":Game of Thrones:").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat(":Game-of-Thrones:").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat("Game of Thrones?").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat("Game of Thrones!!!").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat("Game of  {{(!)}}    Thrones!!!").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones")
-assertThat("{(Game)-(of)-(Thrones)!!!}").isEqualToNormalizingPunctuationAndWhitespace("GameofThrones");
-
-// assertions fail:
-assertThat("Game-of-Thrones").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
-assertThat("{Game:of:Thrones}").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
-assertThat("{(Game)-(of)-(Thrones)!!!}").isEqualToNormalizingPunctuationAndWhitespace("Game of Thrones");
-----
-
-[[assertj-core-string-isBase64]]
-===== isBase64
-
-Verifies that the given `String` is a valid Base64 encoded string. (this is not available for `CharSequence`).
-
-Examples:
-[source,java]
-----
-// assertions succeeds
-assertThat("QXNzZXJ0Sg==").isValidBase64();
-
-// assertion succeeds even without padding as it is optional by specification
-assertThat("QXNzZXJ0Sg").isValidBase64();
-
-// assertion fails as it has invalid Base64 characters
-assertThat("inv@lid").isValidBase64();
-----
-
-[[assertj-core-string-decodedAsBase64]]
-===== decodedAsBase64
-
-Decodes the actual `String` value as a Base64 encoded string, the decoded bytes becoming the new array under test.
-
-Examples:
-[source,java]
-----
-// assertions succeeds
-assertThat("QXNzZXJ0Sg==").decodedAsBase64()
-                          .containsExactly("AssertJ".getBytes());
-
-// assertion succeeds even without padding as it is optional by specification
-assertThat("QXNzZXJ0Sg").decodedAsBase64()
-                        .containsExactly("AssertJ".getBytes());
-
-// assertion fails as it has invalid Base64 characters
-assertThat("inv@lid").decodedAsBase64();
-----
 
 
 [[assertj-core-iterable-assertions]]
@@ -665,25 +595,6 @@ TODO
 ===== byte[] specific assertions
 
 This section covers assertions to byte array.
-
-- Add link:#assertj-core-byte-array-asHexString[`asHexString`] to byte array assertions.
-
-[[assertj-core-byte-array-asHexString]]
-====== asHexString
-
-Converts the actual byte array under test to an hexadecimal String and returns assertions for the computed String allowing String specific assertions from this call. +
-The Hex String representation is in upper case.
-
-Example :
-[source,java]
-----
-byte[] bytes = new byte[] { -1, 0, 1 };
-
-// assertion will pass
-assertThat(bytes).asHexString()
-                 .startsWith("FF")
-                 .isEqualTo("FF0001");
-----
 
 [[assertj-core-exception-assertions]]
 ==== Exception assertions
